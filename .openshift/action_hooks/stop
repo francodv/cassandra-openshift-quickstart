@@ -1,5 +1,12 @@
 #!/bin/bash
 # The logic to stop your application should be put in this script.
-set -x
-kill `ps -ef | grep cassandra | grep -v grep | awk '{ print $2 }'` > /dev/null 2>&1
+echo "stopping Cassandra"
+
+CASSANDRA_PIDS=`ps -ef | grep [c]assandra | grep -v git | awk ' {print $2}'`
+echo "Cassandra PID -> $CASSANDRA_PIDS"
+if [ -n "$CASSANDRA_PIDS" ]; then
+	echo "Killing $CASSANDRA_PIDS"
+	kill -9 $CASSANDRA_PIDS > /dev/null 2>&1
+fi
+
 exit 0
